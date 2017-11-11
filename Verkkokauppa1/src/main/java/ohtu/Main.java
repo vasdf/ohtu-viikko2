@@ -12,13 +12,15 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 public class Main {
 
     public static void main(String[] args) {
-
+        ApplicationContext ctx = new FileSystemXmlApplicationContext("src/main/resources/spring-context.xml");
         
-        Kirjanpito kirjanpito = new Kirjanpito();
-        Varasto varasto = new Varasto(kirjanpito);
-        Pankki pankki = new Pankki(kirjanpito);
-        Viitegeneraattori viitegen = new Viitegeneraattori();
-        Kauppa kauppa = new Kauppa(varasto, pankki, viitegen);
+        Kauppa kauppa = ctx.getBean(Kauppa.class);
+        
+//        Kirjanpito kirjanpito = new Kirjanpito();
+//        Varasto varasto = new Varasto(kirjanpito);
+//        Pankki pankki = new Pankki(kirjanpito);
+//        Viitegeneraattori viitegen = new Viitegeneraattori();
+//        Kauppa kauppa = new Kauppa(varasto, pankki, viitegen);
 
         // kauppa hoitaa yhden asiakkaan kerrallaan seuraavaan tapaan:
         kauppa.aloitaAsiointi();
@@ -37,7 +39,7 @@ public class Main {
         kauppa.tilimaksu("Arto Vihavainen", "3425-1652");
 
         // kirjanpito
-        for (String tapahtuma : kirjanpito.getTapahtumat()) {
+        for (String tapahtuma : ctx.getBean(Kirjanpito.class).getTapahtumat()) {
             System.out.println(tapahtuma);
         }
     }
