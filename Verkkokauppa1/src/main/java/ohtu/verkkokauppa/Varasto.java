@@ -7,7 +7,6 @@ public class Varasto implements VarastoInterface {
     private KirjanpitoInterface kirjanpito;
     private HashMap<Tuote, Integer> saldot;  
     
-    @Autowired
     public Varasto(KirjanpitoInterface kirjanpito2) {
         kirjanpito = kirjanpito2;
         saldot = new HashMap<Tuote, Integer>();
